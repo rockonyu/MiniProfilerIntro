@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Step";
+}
+
+<h2>Step 指令</h2>
+
+
+<div class="row">
+    @if (ViewBag.Num == null) {
+        <div class="col-xs-12">
+            登入的狀態下，畫面左邊就會出現 MiniProfiler 的 Popup 視窗。
+        </div>
+    } else {
+        <div class="col-xs-12">
+            費柏拉係數 (@ViewBag.Num) 計算的結果為：@ViewBag.Fibonacci
+        </div>
+    }
+ 
+</div>
