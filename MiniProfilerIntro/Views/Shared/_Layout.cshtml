@@ -23,9 +23,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Step", "Step", "Profiler")</li>
-                    <li>@Html.ActionLink("Database", "Database", "Profiler")</li>
+                    @*<li>@Html.ActionLink("Database", "Database", "Profiler")</li>
                     <li>@Html.ActionLink("Duplicate", "Duplicate", "Profiler")</li>
-                    <li>@Html.ActionLink("AJAX", "AJAX", "Profiler")</li>
+                    <li>@Html.ActionLink("AJAX", "AJAX", "Profiler")</li>*@
 
                     @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
                         <li>@Html.ActionLink("Results", "results", "mini-profiler-resources")</li>
