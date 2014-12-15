@@ -1,4 +1,5 @@
-﻿using StackExchange.Profiling;
+﻿using MiniProfilerIntro.Models;
+using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,10 @@ namespace MiniProfilerIntro.Controllers
         }
 
         public ActionResult Database() {
-            return View();
+            var db = new itunesdataEntities();
+            var tracks = db.Track.OrderBy(m => m.Id).Take(100).ToList();
+
+            return View(tracks);
         }
 
         public ActionResult Duplicate() {

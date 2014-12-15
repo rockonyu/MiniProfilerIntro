@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="itunesdataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="LinkUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PrimaryGenreId" Type="bigint" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="ArtistId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CensoredName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ViewUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="TWDPrice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="USDPrice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Explicitness" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="WorkUrl100" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="WorkUrl60" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Copyright" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="ReleaseDate" Type="datetime" Nullable="false" />
+          <Property Name="TrackCount" Type="int" Nullable="false" />
+          <Property Name="PrimaryGenreId" Type="bigint" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dictionary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Track">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="ArtistId" Type="bigint" Nullable="false" />
+          <Property Name="CollectionId" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CensoredName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ViewUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PreviewUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="WorkUrl60" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="WorkUrl100" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="TWDPrice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="USDPrice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Explicitness" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DiscCount" Type="int" Nullable="false" />
+          <Property Name="DiscNumber" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="TimeMillis" Type="bigint" Nullable="false" />
+          <Property Name="PrimaryGenreId" Type="bigint" Nullable="false" />
+          <Property Name="ReleaseDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_artist_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Artist" Type="Self.Artist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Artist">
+              <PropertyRef Name="PrimaryGenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Collection_Artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
+          <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Collection">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Collection_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Collection">
+              <PropertyRef Name="PrimaryGenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Track_artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
+          <End Role="Track" Type="Self.Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Track_collection">
+          <End Role="Collection" Type="Self.Collection" Multiplicity="1" />
+          <End Role="Track" Type="Self.Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Collection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="CollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Track_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Track" Type="Self.Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="PrimaryGenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="itunesdataModelStoreContainer">
+          <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Collection" EntityType="Self.Collection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dictionary" EntityType="Self.Dictionary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_artist_Genre" Association="Self.FK_artist_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Artist" EntitySet="Artist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Collection_Artist" Association="Self.FK_Collection_Artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="Collection" EntitySet="Collection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Collection_Genre" Association="Self.FK_Collection_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Collection" EntitySet="Collection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Track_artist" Association="Self.FK_Track_artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Track_collection" Association="Self.FK_Track_collection">
+            <End Role="Collection" EntitySet="Collection" />
+            <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Track_Genre" Association="Self.FK_Track_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="itunesdataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LinkUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrimaryGenreId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_artist_Genre" FromRole="Artist" ToRole="Genre" />
+          <NavigationProperty Name="Collection" Relationship="Self.FK_Collection_Artist" FromRole="Artist" ToRole="Collection" />
+          <NavigationProperty Name="Track" Relationship="Self.FK_Track_artist" FromRole="Artist" ToRole="Track" />
+        </EntityType>
+        <EntityType Name="Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="ArtistId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CensoredName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ViewUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TWDPrice" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="USDPrice" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Explicitness" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WorkUrl100" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WorkUrl60" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Copyright" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TrackCount" Type="Int32" Nullable="false" />
+          <Property Name="PrimaryGenreId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK_Collection_Artist" FromRole="Collection" ToRole="Artist" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Collection_Genre" FromRole="Collection" ToRole="Genre" />
+          <NavigationProperty Name="Track" Relationship="Self.FK_Track_collection" FromRole="Collection" ToRole="Track" />
+        </EntityType>
+        <EntityType Name="Dictionary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK_artist_Genre" FromRole="Genre" ToRole="Artist" />
+          <NavigationProperty Name="Collection" Relationship="Self.FK_Collection_Genre" FromRole="Genre" ToRole="Collection" />
+          <NavigationProperty Name="Track" Relationship="Self.FK_Track_Genre" FromRole="Genre" ToRole="Track" />
+        </EntityType>
+        <EntityType Name="Track">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="ArtistId" Type="Int64" Nullable="false" />
+          <Property Name="CollectionId" Type="Int64" Nullable="false" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CensoredName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ViewUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PreviewUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WorkUrl60" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WorkUrl100" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TWDPrice" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="USDPrice" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Explicitness" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DiscCount" Type="Int32" Nullable="false" />
+          <Property Name="DiscNumber" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="TimeMillis" Type="Int64" Nullable="false" />
+          <Property Name="PrimaryGenreId" Type="Int64" Nullable="false" />
+          <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK_Track_artist" FromRole="Track" ToRole="Artist" />
+          <NavigationProperty Name="Collection" Relationship="Self.FK_Track_collection" FromRole="Track" ToRole="Collection" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Track_Genre" FromRole="Track" ToRole="Genre" />
+        </EntityType>
+        <Association Name="FK_artist_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Artist" Type="Self.Artist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Artist">
+              <PropertyRef Name="PrimaryGenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Collection_Artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
+          <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Collection">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Track_artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
+          <End Role="Track" Type="Self.Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Collection_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Collection">
+              <PropertyRef Name="PrimaryGenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Track_collection">
+          <End Role="Collection" Type="Self.Collection" Multiplicity="1" />
+          <End Role="Track" Type="Self.Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Collection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="CollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Track_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Track" Type="Self.Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="PrimaryGenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="itunesdataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artist" EntityType="Self.Artist" />
+          <EntitySet Name="Collection" EntityType="Self.Collection" />
+          <EntitySet Name="Dictionary" EntityType="Self.Dictionary" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" />
+          <EntitySet Name="Track" EntityType="Self.Track" />
+          <AssociationSet Name="FK_artist_Genre" Association="Self.FK_artist_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Artist" EntitySet="Artist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Collection_Artist" Association="Self.FK_Collection_Artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="Collection" EntitySet="Collection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Track_artist" Association="Self.FK_Track_artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Collection_Genre" Association="Self.FK_Collection_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Collection" EntitySet="Collection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Track_collection" Association="Self.FK_Track_collection">
+            <End Role="Collection" EntitySet="Collection" />
+            <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Track_Genre" Association="Self.FK_Track_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="itunesdataModelStoreContainer" CdmEntityContainer="itunesdataEntities">
+          <EntitySetMapping Name="Artist">
+            <EntityTypeMapping TypeName="itunesdataModel.Artist">
+              <MappingFragment StoreEntitySet="Artist">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+                <ScalarProperty Name="PrimaryGenreId" ColumnName="PrimaryGenreId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Collection">
+            <EntityTypeMapping TypeName="itunesdataModel.Collection">
+              <MappingFragment StoreEntitySet="Collection">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CensoredName" ColumnName="CensoredName" />
+                <ScalarProperty Name="ViewUrl" ColumnName="ViewUrl" />
+                <ScalarProperty Name="TWDPrice" ColumnName="TWDPrice" />
+                <ScalarProperty Name="USDPrice" ColumnName="USDPrice" />
+                <ScalarProperty Name="Explicitness" ColumnName="Explicitness" />
+                <ScalarProperty Name="WorkUrl100" ColumnName="WorkUrl100" />
+                <ScalarProperty Name="WorkUrl60" ColumnName="WorkUrl60" />
+                <ScalarProperty Name="Copyright" ColumnName="Copyright" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="TrackCount" ColumnName="TrackCount" />
+                <ScalarProperty Name="PrimaryGenreId" ColumnName="PrimaryGenreId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dictionary">
+            <EntityTypeMapping TypeName="itunesdataModel.Dictionary">
+              <MappingFragment StoreEntitySet="Dictionary">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genre">
+            <EntityTypeMapping TypeName="itunesdataModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Track">
+            <EntityTypeMapping TypeName="itunesdataModel.Track">
+              <MappingFragment StoreEntitySet="Track">
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="CollectionId" ColumnName="CollectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CensoredName" ColumnName="CensoredName" />
+                <ScalarProperty Name="ViewUrl" ColumnName="ViewUrl" />
+                <ScalarProperty Name="PreviewUrl" ColumnName="PreviewUrl" />
+                <ScalarProperty Name="WorkUrl60" ColumnName="WorkUrl60" />
+                <ScalarProperty Name="WorkUrl100" ColumnName="WorkUrl100" />
+                <ScalarProperty Name="TWDPrice" ColumnName="TWDPrice" />
+                <ScalarProperty Name="USDPrice" ColumnName="USDPrice" />
+                <ScalarProperty Name="Explicitness" ColumnName="Explicitness" />
+                <ScalarProperty Name="DiscCount" ColumnName="DiscCount" />
+                <ScalarProperty Name="DiscNumber" ColumnName="DiscNumber" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="TimeMillis" ColumnName="TimeMillis" />
+                <ScalarProperty Name="PrimaryGenreId" ColumnName="PrimaryGenreId" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
