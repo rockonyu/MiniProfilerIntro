@@ -3,5 +3,61 @@
     ViewBag.Title = "AJAX";
 }
 
-<h2>AJAX</h2>
+<h2>AJAX 呼叫</h2>
+<p>每次 AJAX 呼叫後你會立刻獲得分析結果。</p>
+<div ng-app="ProfilerApp" ng-controller="AjaxCtrl">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="query">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button" ng-click="search()">尋找歌曲</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+        <div class="col-md-8">
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    <br />
+    <table ng-show="tracks.length > 0" class="table table-striped ng-hide">
+        <thead>
+            <tr>
+                <th class="col-xs-3">
+                    Id
+                </th>
+                <th class="col-xs-3">
+                    Name
+                </th>
+                <th class="col-xs-3">
+                    Artist
+                </th>
+                <th class="col-xs-3">
+                    ReleaseDate
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="track in tracks">
+                <td ng-bind="track.Id"></td>
+                <td ng-bind="track.Name"></td>
+                <td ng-bind="track.Artist.Name"></td>
+                <td ng-bind="track.ReleaseDate"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+<script src="http://code.angularjs.org/1.2.0-rc.2/angular-route.min.js"></script>
+
+<script>
+    var profilerApp = angular.module('ProfilerApp', ['ngRoute']);
+    profilerApp.controller('AjaxCtrl', function ($scope, $http) {
+        $scope.search = function () {
+            $http.get('/api/Track?name=' + $scope.query).success(function (data) {
+                $scope.tracks = data;
+            });
+        }
+    });
+</script>

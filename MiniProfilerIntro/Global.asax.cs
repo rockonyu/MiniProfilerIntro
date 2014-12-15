@@ -1,5 +1,6 @@
 ﻿using MiniProfilerIntro.Models;
 using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
 using System;
 using System.Data.Entity;
 using System.Web;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
+using System.Web.Http;
 
 namespace MiniProfilerIntro
 {
@@ -16,6 +18,7 @@ namespace MiniProfilerIntro
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -23,6 +26,9 @@ namespace MiniProfilerIntro
 
             MiniProfiler.Settings.Results_Authorize = IsUserAllowedToSeeMiniProfilerUI;
             MiniProfiler.Settings.Results_List_Authorize = IsUserAllowedToSeeMiniProfilerUI;
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
+            MiniProfilerEF6.Initialize();
         }
 
         private bool IsUserAllowedToSeeMiniProfilerUI(HttpRequest httpRequest) {

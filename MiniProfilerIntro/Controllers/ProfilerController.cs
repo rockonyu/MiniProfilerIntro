@@ -10,12 +10,12 @@ namespace MiniProfilerIntro.Controllers
 {
     public class ProfilerController : Controller
     {
+        MiniProfiler profiler = MiniProfiler.Current; // it's ok if this is null
+        private itunesdataEntities db = new itunesdataEntities();
         //
         // GET: /Profiler/
 
         public ActionResult Step(int? id) {
-            var profiler = MiniProfiler.Current; // it's ok if this is null
-
             using (profiler.Step("進入 Step 控制器")) {
                 if (id != null) {
                     using (profiler.Step(String.Format("計算費柏拉係數：{0}", id))) { // and here
@@ -37,14 +37,20 @@ namespace MiniProfilerIntro.Controllers
         }
 
         public ActionResult Database() {
-            var db = new itunesdataEntities();
             var tracks = db.Track.OrderBy(m => m.Id).Take(100).ToList();
-
             return View(tracks);
         }
 
         public ActionResult Duplicate() {
-            return View();
+            List<Track> tracks = null;
+
+            // 會導致重複查詢的 Sql 語句
+            tracks = db.Track.OrderBy(m => m.Id).Take(100).ToList();
+
+            // Include Artist 可避免重複查詢
+            // tracks = db.Track.Include("Artist").OrderBy(m => m.Id).Take(100).ToList();
+
+            return View(tracks);
         }
 
         public ActionResult AJAX() {

@@ -1,7 +1,101 @@
 ﻿@model IEnumerable<MiniProfilerIntro.Models.Track>
-    @{
-        ViewBag.Title = "Database";
-    }
+@{
+    ViewBag.Title = "Database 的 SQL 語法分析";
+}
 
-    <h2>Database</h2>
+<h2>Database 分析</h2>
+<p>依照查詢方式建立資料庫的連線 (在此使用 Entity Framework)，MiniProfiler 會列出轉換後的 SQL 語法。</p>
 
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li role="presentation" class="active"><a href="#DbConnection" aria-controls="DbConnection" role="tab" data-toggle="tab">DbConnection</a></li>
+            <li role="presentation"><a href="#linq-to-sql" aria-controls="linq-to-sql" role="tab" data-toggle="tab">Linq-to-Sql</a></li>
+            <li role="presentation"><a href="#ef6" aria-controls="ef6" role="tab" data-toggle="tab">EF 6+</a></li>
+            <li role="presentation"><a href="#ef4-5" aria-controls="ef4-5" role="tab" data-toggle="tab">EF4 and EF5</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="DbConnection">
+                <pre>public static DbConnection GetOpenConnection() 
+{
+    var cnn = CreateRealConnection(); // A SqlConnection, SqliteConnection ... or whatever
+    // wrap the connection with a profiling connection that tracks timings 
+    return new StackExchange.Profiling.Data.ProfiledDbConnection(cnn, MiniProfiler.Current);
+}</pre>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="linq-to-sql">
+                <pre>partial class DBContext
+{
+   public static DBContext Get()
+   {
+      var conn = new StackExchange.Profiling.Data.ProfiledDbConnection(GetConnection(), MiniProfiler.Current);
+      return new DBContext(conn);
+   }
+}
+</pre>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="ef6">
+            <pre>using StackExchange.Profiling;
+...    
+protected void Application_Start()
+{
+    MiniProfilerEF6.Initialize();
+}
+</pre></div>
+            <div role="tabpanel" class="tab-pane" id="ef4-5">
+            <pre>using StackExchange.Profiling.Data;
+...
+public static MyModel Get()
+{
+    var conn =  new EFProfiledDbConnection(GetConnection(), MiniProfiler.Current);
+    return ObjectContextUtils.CreateObjectContext&lt;mymodel&gt;(conn);
+}</pre></div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <a href="http://miniprofiler.com/" target="_blank">MiniProfiler Document</a>
+    </div>
+</div>
+
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="col-xs-3">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="col-xs-3">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="col-xs-3">
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th class="col-xs-3">
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                </tr>
+        }
+     </tbody>
+    </table>
+<table>
+
+</table>

@@ -48,5 +48,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @MiniProfiler.RenderIncludes()
+
+    <script type="text/javascript">
+    $(function () {
+        $('#myTab a:first').tab('show')
+    })
+    </script>
 </body>
 </html>
