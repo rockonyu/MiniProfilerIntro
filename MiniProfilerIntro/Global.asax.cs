@@ -19,6 +19,8 @@ namespace MiniProfilerIntro
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -26,7 +28,6 @@ namespace MiniProfilerIntro
 
             MiniProfiler.Settings.Results_Authorize = IsUserAllowedToSeeMiniProfilerUI;
             MiniProfiler.Settings.Results_List_Authorize = IsUserAllowedToSeeMiniProfilerUI;
-            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             MiniProfilerEF6.Initialize();
         }

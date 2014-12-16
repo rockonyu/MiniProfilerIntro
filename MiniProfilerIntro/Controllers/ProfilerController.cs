@@ -37,12 +37,17 @@ namespace MiniProfilerIntro.Controllers
         }
 
         public ActionResult Database() {
-            var tracks = db.Track.OrderBy(m => m.Id).Take(100).ToList();
+            var tracks = new List<Track>();
+
+            using (profiler.Step("依照 ID 查詢前 100 首歌曲")) {
+                tracks = db.Track.OrderBy(m => m.Id).Take(100).ToList();
+            }
+  
             return View(tracks);
         }
 
         public ActionResult Duplicate() {
-            List<Track> tracks = null;
+            var tracks = new List<Track>();
 
             // 會導致重複查詢的 Sql 語句
             tracks = db.Track.OrderBy(m => m.Id).Take(100).ToList();
