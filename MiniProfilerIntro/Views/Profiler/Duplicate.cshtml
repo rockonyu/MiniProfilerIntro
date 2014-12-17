@@ -33,6 +33,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Artist.Name)
+                    <!-- 撈取資料時未 include Artist 資料表，會造成 Duplicate -->
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ReleaseDate)

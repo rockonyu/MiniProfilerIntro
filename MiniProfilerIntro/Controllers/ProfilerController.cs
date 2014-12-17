@@ -6,25 +6,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MiniProfilerIntro.Controllers
-{
-    public class ProfilerController : Controller
-    {
-        MiniProfiler profiler = MiniProfiler.Current; // it's ok if this is null
+namespace MiniProfilerIntro.Controllers {
+    public class ProfilerController : Controller {
         private itunesdataEntities db = new itunesdataEntities();
         //
         // GET: /Profiler/
-
-        public ActionResult Step(int? id) {
-            using (profiler.Step("進入 Step 控制器")) {
-                if (id != null) {
-                    using (profiler.Step(String.Format("計算費柏拉係數：{0}", id))) { // and here
-                        ViewBag.Num = id;
-                        ViewBag.Fibonacci = Fibonacci(id.Value);
-                    }
-                }
-
-                System.Threading.Thread.Sleep(1000);
+        public ActionResult Step() {
+            var id = 30;
+            using (MiniProfiler.Current.Step(String.Format("計算費柏拉係數：{0}", id))) { // and here
+                ViewBag.Num = id;
+                ViewBag.Fibonacci = Fibonacci(id);
             }
             return View();
         }
@@ -39,10 +30,10 @@ namespace MiniProfilerIntro.Controllers
         public ActionResult Database() {
             var tracks = new List<Track>();
 
-            using (profiler.Step("依照 ID 查詢前 100 首歌曲")) {
+            using (MiniProfiler.Current.Step("依照 ID 查詢前 100 首歌曲")) {
                 tracks = db.Track.OrderBy(m => m.Id).Take(100).ToList();
             }
-  
+
             return View(tracks);
         }
 
@@ -61,5 +52,5 @@ namespace MiniProfilerIntro.Controllers
         public ActionResult AJAX() {
             return View();
         }
-	}
+    }
 }

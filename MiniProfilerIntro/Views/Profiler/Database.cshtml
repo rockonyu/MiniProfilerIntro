@@ -10,9 +10,8 @@
     <div class="col-xs-12">
         <ul class="nav nav-tabs" role="tablist" id="myTab">
             <li role="presentation" class="active"><a href="#DbConnection" aria-controls="DbConnection" role="tab" data-toggle="tab">DbConnection</a></li>
-            <li role="presentation"><a href="#linq-to-sql" aria-controls="linq-to-sql" role="tab" data-toggle="tab">Linq-to-Sql</a></li>
-            <li role="presentation"><a href="#ef6" aria-controls="ef6" role="tab" data-toggle="tab">EF 6+</a></li>
             <li role="presentation"><a href="#ef4-5" aria-controls="ef4-5" role="tab" data-toggle="tab">EF4 and EF5</a></li>
+            <li role="presentation"><a href="#ef6" aria-controls="ef6" role="tab" data-toggle="tab">EF 6+</a></li>
         </ul>
 
         <div class="tab-content">
@@ -24,25 +23,6 @@
     return new StackExchange.Profiling.Data.ProfiledDbConnection(cnn, MiniProfiler.Current);
 }</pre>
             </div>
-            <div role="tabpanel" class="tab-pane" id="linq-to-sql">
-                <pre>partial class DBContext
-{
-   public static DBContext Get()
-   {
-      var conn = new StackExchange.Profiling.Data.ProfiledDbConnection(GetConnection(), MiniProfiler.Current);
-      return new DBContext(conn);
-   }
-}
-</pre>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="ef6">
-            <pre>using StackExchange.Profiling;
-...    
-protected void Application_Start()
-{
-    MiniProfilerEF6.Initialize();
-}
-</pre></div>
             <div role="tabpanel" class="tab-pane" id="ef4-5">
             <pre>using StackExchange.Profiling.Data;
 ...
@@ -51,6 +31,15 @@ public static MyModel Get()
     var conn =  new EFProfiledDbConnection(GetConnection(), MiniProfiler.Current);
     return ObjectContextUtils.CreateObjectContext&lt;mymodel&gt;(conn);
 }</pre></div>
+            <div role="tabpanel" class="tab-pane" id="ef6">
+                <pre>using StackExchange.Profiling;
+...    
+protected void Application_Start()
+{
+    MiniProfilerEF6.Initialize();
+}
+</pre>
+            </div>
         </div>
     </div>
     <div class="col-xs-12">
