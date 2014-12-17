@@ -1,5 +1,6 @@
 ﻿using MiniProfilerIntro.Models;
 using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 using System;
 using System.Data.Entity;
 using System.Web;
@@ -23,6 +24,12 @@ namespace MiniProfilerIntro
 
             MiniProfiler.Settings.Results_Authorize = IsUserAllowedToSeeMiniProfilerUI;
             MiniProfiler.Settings.Results_List_Authorize = IsUserAllowedToSeeMiniProfilerUI;
+
+            MiniProfilerEF.Initialize();
+
+            System.Data.Entity.DbConfiguration.Loaded += (sender, e) =>
+                e.ReplaceService<System.Data.Entity.Core.Common.DbProviderServices>(
+                    (services, o) => EFProfiledSqlClientDbProviderServices.Instance);
         }
 
         private bool IsUserAllowedToSeeMiniProfilerUI(HttpRequest httpRequest) {

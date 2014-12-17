@@ -88,6 +88,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
+    <Reference Include="MiniProfiler.EntityFramework">
+      <HintPath>..\packages\MiniProfiler.EF.2.1.0\lib\net40\MiniProfiler.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -191,6 +194,8 @@
     <Compile Include="Models\Dictionary.cs">
       <DependentUpon>ItunesEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service\EFProfiledDbProviderServices.cs" />
+    <Compile Include="Service\EFProfiledSqlClientDbProviderServices.cs" />
     <Compile Include="Models\Genre.cs">
       <DependentUpon>ItunesEntities.tt</DependentUpon>
     </Compile>
