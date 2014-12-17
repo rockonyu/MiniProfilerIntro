@@ -88,7 +88,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="MiniProfiler.EntityFramework">
+    <Reference Include="MiniProfiler.EntityFramework, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MiniProfiler.EF.2.1.0\lib\net40\MiniProfiler.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
@@ -216,7 +217,6 @@
       <DependentUpon>ItunesEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ProfilerModel.cs" />
     <Compile Include="Models\Track.cs">
       <DependentUpon>ItunesEntities.tt</DependentUpon>
     </Compile>

@@ -1,7 +1,44 @@
-﻿
+﻿@model IEnumerable<MiniProfilerIntro.Models.Track>
 @{
     ViewBag.Title = "Duplicate";
 }
 
-<h2>Duplicate</h2>
-
+<h2>重複查詢檢測</h2>
+<p>MiniProfiler 可以快速幫你找出僅參數不同的查詢語句，會使用<span class="text-danger">紅色驚嘆號</span>提示。</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="col-xs-3">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="col-xs-3">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="col-xs-3">
+                Artist
+            </th>
+            <th class="col-xs-3">
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist.Name)
+                    <!-- 撈取資料時未 include Artist 資料表，會造成 Duplicate -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
