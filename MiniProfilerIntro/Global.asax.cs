@@ -53,14 +53,13 @@ namespace MiniProfilerIntro
             MiniProfiler.Stop();
         }
 
-        //protected void Application_AuthenticateRequest(Object sender, EventArgs e) {
-        //    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated) {
-        //        if (!HttpContext.Current.User.IsInRole("Admin")) {
-        //            StackExchange.Profiling.MiniProfiler.Stop(discardResults: true);
-        //        }
-        //    } else {
-        //        StackExchange.Profiling.MiniProfiler.Stop(discardResults: true);
-        //    }   
-        //}
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e) {
+            var user = HttpContext.Current.User;
+            if (user != null && user.Identity.IsAuthenticated && user.IsInRole("Admin")) {
+                // 保留分析結果
+            } else {
+                StackExchange.Profiling.MiniProfiler.Stop(discardResults: true);
+            }
+        }
     }
 }
