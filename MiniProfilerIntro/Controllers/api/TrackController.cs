@@ -9,8 +9,7 @@ using System.Web.Http;
 
 namespace MiniProfilerIntro.Controllers.api
 {
-    public class TrackController : ApiController
-    {
+    public class TrackController : ApiController {
         private itunesdataEntities db = new itunesdataEntities();
 
         public IEnumerable<apiTrack> Get() {
