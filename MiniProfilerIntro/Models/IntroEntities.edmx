@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="itunesdataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Artist">
           <Key>
             <PropertyRef Name="Id" />
@@ -55,9 +55,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="ArtistId" Type="bigint" Nullable="false" />
           <Property Name="CollectionId" Type="bigint" Nullable="false" />
-          <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="CensoredName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="ViewUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
@@ -77,7 +77,7 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK_artist_Genre">
+        <Association Name="FK_dbo_Artist_dbo_Genre_PrimaryGenreId">
           <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
           <End Role="Artist" Type="Self.Artist" Multiplicity="*" />
           <ReferentialConstraint>
@@ -89,7 +89,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Collection_Artist">
+        <Association Name="FK_dbo_Collection_dbo_Artist_ArtistId">
           <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
           <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
           <ReferentialConstraint>
@@ -101,7 +101,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Collection_Genre">
+        <Association Name="FK_dbo_Collection_dbo_Genre_PrimaryGenreId">
           <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
           <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
           <ReferentialConstraint>
@@ -113,7 +113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Track_artist">
+        <Association Name="FK_dbo_Track_dbo_Artist_ArtistId">
           <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Track_collection">
+        <Association Name="FK_dbo_Track_dbo_Collection_CollectionId">
           <End Role="Collection" Type="Self.Collection" Multiplicity="1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,7 +137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Track_Genre">
+        <Association Name="FK_dbo_Track_dbo_Genre_PrimaryGenreId">
           <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -149,33 +149,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="itunesdataModelStoreContainer">
+        <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Collection" EntityType="Self.Collection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dictionary" EntityType="Self.Dictionary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_artist_Genre" Association="Self.FK_artist_Genre">
+          <AssociationSet Name="FK_dbo_Artist_dbo_Genre_PrimaryGenreId" Association="Self.FK_dbo_Artist_dbo_Genre_PrimaryGenreId">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Artist" EntitySet="Artist" />
           </AssociationSet>
-          <AssociationSet Name="FK_Collection_Artist" Association="Self.FK_Collection_Artist">
+          <AssociationSet Name="FK_dbo_Collection_dbo_Artist_ArtistId" Association="Self.FK_dbo_Collection_dbo_Artist_ArtistId">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Collection" EntitySet="Collection" />
           </AssociationSet>
-          <AssociationSet Name="FK_Collection_Genre" Association="Self.FK_Collection_Genre">
+          <AssociationSet Name="FK_dbo_Collection_dbo_Genre_PrimaryGenreId" Association="Self.FK_dbo_Collection_dbo_Genre_PrimaryGenreId">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Collection" EntitySet="Collection" />
           </AssociationSet>
-          <AssociationSet Name="FK_Track_artist" Association="Self.FK_Track_artist">
+          <AssociationSet Name="FK_dbo_Track_dbo_Artist_ArtistId" Association="Self.FK_dbo_Track_dbo_Artist_ArtistId">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK_Track_collection" Association="Self.FK_Track_collection">
+          <AssociationSet Name="FK_dbo_Track_dbo_Collection_CollectionId" Association="Self.FK_dbo_Track_dbo_Collection_CollectionId">
             <End Role="Collection" EntitySet="Collection" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK_Track_Genre" Association="Self.FK_Track_Genre">
+          <AssociationSet Name="FK_dbo_Track_dbo_Genre_PrimaryGenreId" Association="Self.FK_dbo_Track_dbo_Genre_PrimaryGenreId">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
@@ -184,7 +184,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="itunesdataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Artist">
           <Key>
             <PropertyRef Name="Id" />
@@ -195,9 +195,9 @@
           <Property Name="PrimaryGenreId" Type="Int64" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Genre" Relationship="Self.FK_artist_Genre" FromRole="Artist" ToRole="Genre" />
-          <NavigationProperty Name="Collection" Relationship="Self.FK_Collection_Artist" FromRole="Artist" ToRole="Collection" />
-          <NavigationProperty Name="Track" Relationship="Self.FK_Track_artist" FromRole="Artist" ToRole="Track" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_dbo_Artist_dbo_Genre_PrimaryGenreId" FromRole="Artist" ToRole="Genre" />
+          <NavigationProperty Name="Collection" Relationship="Self.FK_dbo_Collection_dbo_Artist_ArtistId" FromRole="Artist" ToRole="Collection" />
+          <NavigationProperty Name="Track" Relationship="Self.FK_dbo_Track_dbo_Artist_ArtistId" FromRole="Artist" ToRole="Track" />
         </EntityType>
         <EntityType Name="Collection">
           <Key>
@@ -219,9 +219,9 @@
           <Property Name="PrimaryGenreId" Type="Int64" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Artist" Relationship="Self.FK_Collection_Artist" FromRole="Collection" ToRole="Artist" />
-          <NavigationProperty Name="Genre" Relationship="Self.FK_Collection_Genre" FromRole="Collection" ToRole="Genre" />
-          <NavigationProperty Name="Track" Relationship="Self.FK_Track_collection" FromRole="Collection" ToRole="Track" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK_dbo_Collection_dbo_Artist_ArtistId" FromRole="Collection" ToRole="Artist" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_dbo_Collection_dbo_Genre_PrimaryGenreId" FromRole="Collection" ToRole="Genre" />
+          <NavigationProperty Name="Track" Relationship="Self.FK_dbo_Track_dbo_Collection_CollectionId" FromRole="Collection" ToRole="Track" />
         </EntityType>
         <EntityType Name="Dictionary">
           <Key>
@@ -236,17 +236,17 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Artist" Relationship="Self.FK_artist_Genre" FromRole="Genre" ToRole="Artist" />
-          <NavigationProperty Name="Collection" Relationship="Self.FK_Collection_Genre" FromRole="Genre" ToRole="Collection" />
-          <NavigationProperty Name="Track" Relationship="Self.FK_Track_Genre" FromRole="Genre" ToRole="Track" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK_dbo_Artist_dbo_Genre_PrimaryGenreId" FromRole="Genre" ToRole="Artist" />
+          <NavigationProperty Name="Collection" Relationship="Self.FK_dbo_Collection_dbo_Genre_PrimaryGenreId" FromRole="Genre" ToRole="Collection" />
+          <NavigationProperty Name="Track" Relationship="Self.FK_dbo_Track_dbo_Genre_PrimaryGenreId" FromRole="Genre" ToRole="Track" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="ArtistId" Type="Int64" Nullable="false" />
           <Property Name="CollectionId" Type="Int64" Nullable="false" />
-          <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CensoredName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ViewUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
@@ -265,11 +265,11 @@
           <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Artist" Relationship="Self.FK_Track_artist" FromRole="Track" ToRole="Artist" />
-          <NavigationProperty Name="Collection" Relationship="Self.FK_Track_collection" FromRole="Track" ToRole="Collection" />
-          <NavigationProperty Name="Genre" Relationship="Self.FK_Track_Genre" FromRole="Track" ToRole="Genre" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK_dbo_Track_dbo_Artist_ArtistId" FromRole="Track" ToRole="Artist" />
+          <NavigationProperty Name="Collection" Relationship="Self.FK_dbo_Track_dbo_Collection_CollectionId" FromRole="Track" ToRole="Collection" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_dbo_Track_dbo_Genre_PrimaryGenreId" FromRole="Track" ToRole="Genre" />
         </EntityType>
-        <Association Name="FK_artist_Genre">
+        <Association Name="FK_dbo_Artist_dbo_Genre_PrimaryGenreId">
           <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
           <End Role="Artist" Type="Self.Artist" Multiplicity="*" />
           <ReferentialConstraint>
@@ -281,7 +281,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Collection_Artist">
+        <Association Name="FK_dbo_Collection_dbo_Artist_ArtistId">
           <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
           <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,7 +293,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Track_artist">
+        <Association Name="FK_dbo_Track_dbo_Artist_ArtistId">
           <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -305,7 +305,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Collection_Genre">
+        <Association Name="FK_dbo_Collection_dbo_Genre_PrimaryGenreId">
           <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
           <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
           <ReferentialConstraint>
@@ -317,7 +317,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Track_collection">
+        <Association Name="FK_dbo_Track_dbo_Collection_CollectionId">
           <End Role="Collection" Type="Self.Collection" Multiplicity="1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -329,7 +329,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Track_Genre">
+        <Association Name="FK_dbo_Track_dbo_Genre_PrimaryGenreId">
           <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -341,33 +341,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="itunesdataEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="IntroEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Artist" EntityType="Self.Artist" />
           <EntitySet Name="Collection" EntityType="Self.Collection" />
           <EntitySet Name="Dictionary" EntityType="Self.Dictionary" />
           <EntitySet Name="Genre" EntityType="Self.Genre" />
           <EntitySet Name="Track" EntityType="Self.Track" />
-          <AssociationSet Name="FK_artist_Genre" Association="Self.FK_artist_Genre">
+          <AssociationSet Name="FK_dbo_Artist_dbo_Genre_PrimaryGenreId" Association="Self.FK_dbo_Artist_dbo_Genre_PrimaryGenreId">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Artist" EntitySet="Artist" />
           </AssociationSet>
-          <AssociationSet Name="FK_Collection_Artist" Association="Self.FK_Collection_Artist">
+          <AssociationSet Name="FK_dbo_Collection_dbo_Artist_ArtistId" Association="Self.FK_dbo_Collection_dbo_Artist_ArtistId">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Collection" EntitySet="Collection" />
           </AssociationSet>
-          <AssociationSet Name="FK_Track_artist" Association="Self.FK_Track_artist">
+          <AssociationSet Name="FK_dbo_Track_dbo_Artist_ArtistId" Association="Self.FK_dbo_Track_dbo_Artist_ArtistId">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK_Collection_Genre" Association="Self.FK_Collection_Genre">
+          <AssociationSet Name="FK_dbo_Collection_dbo_Genre_PrimaryGenreId" Association="Self.FK_dbo_Collection_dbo_Genre_PrimaryGenreId">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Collection" EntitySet="Collection" />
           </AssociationSet>
-          <AssociationSet Name="FK_Track_collection" Association="Self.FK_Track_collection">
+          <AssociationSet Name="FK_dbo_Track_dbo_Collection_CollectionId" Association="Self.FK_dbo_Track_dbo_Collection_CollectionId">
             <End Role="Collection" EntitySet="Collection" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK_Track_Genre" Association="Self.FK_Track_Genre">
+          <AssociationSet Name="FK_dbo_Track_dbo_Genre_PrimaryGenreId" Association="Self.FK_dbo_Track_dbo_Genre_PrimaryGenreId">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
@@ -377,9 +377,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="itunesdataModelStoreContainer" CdmEntityContainer="itunesdataEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="IntroEntities">
           <EntitySetMapping Name="Artist">
-            <EntityTypeMapping TypeName="itunesdataModel.Artist">
+            <EntityTypeMapping TypeName="Model.Artist">
               <MappingFragment StoreEntitySet="Artist">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -391,7 +391,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Collection">
-            <EntityTypeMapping TypeName="itunesdataModel.Collection">
+            <EntityTypeMapping TypeName="Model.Collection">
               <MappingFragment StoreEntitySet="Collection">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
@@ -413,7 +413,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Dictionary">
-            <EntityTypeMapping TypeName="itunesdataModel.Dictionary">
+            <EntityTypeMapping TypeName="Model.Dictionary">
               <MappingFragment StoreEntitySet="Dictionary">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
@@ -421,7 +421,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Genre">
-            <EntityTypeMapping TypeName="itunesdataModel.Genre">
+            <EntityTypeMapping TypeName="Model.Genre">
               <MappingFragment StoreEntitySet="Genre">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -429,11 +429,11 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Track">
-            <EntityTypeMapping TypeName="itunesdataModel.Track">
+            <EntityTypeMapping TypeName="Model.Track">
               <MappingFragment StoreEntitySet="Track">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
                 <ScalarProperty Name="CollectionId" ColumnName="CollectionId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CensoredName" ColumnName="CensoredName" />
                 <ScalarProperty Name="ViewUrl" ColumnName="ViewUrl" />

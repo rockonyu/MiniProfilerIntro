@@ -14,9 +14,9 @@ namespace MiniProfilerIntro.Models
     
     public partial class Track
     {
+        public long Id { get; set; }
         public long ArtistId { get; set; }
         public long CollectionId { get; set; }
-        public long Id { get; set; }
         public string Name { get; set; }
         public string CensoredName { get; set; }
         public string ViewUrl { get; set; }

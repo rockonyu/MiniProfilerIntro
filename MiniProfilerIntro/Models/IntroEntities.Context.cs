@@ -13,10 +13,10 @@ namespace MiniProfilerIntro.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class itunesdataEntities : DbContext
+    public partial class IntroEntities : DbContext
     {
-        public itunesdataEntities()
-            : base("name=itunesdataEntities")
+        public IntroEntities()
+            : base("name=IntroEntities")
         {
         }
     

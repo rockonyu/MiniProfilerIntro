@@ -8,7 +8,11 @@ using System.Web.Mvc;
 
 namespace MiniProfilerIntro.Controllers {
     public class ProfilerController : Controller {
-        private itunesdataEntities db = new itunesdataEntities();
+        private IntroEntities db = new IntroEntities();
+
+        // account: austin@infbeyond.com
+        // password: zzzzzz
+
         //
         // GET: /Profiler/
         public ActionResult Step() {
